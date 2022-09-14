@@ -1,0 +1,27 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=H_003A_005CRiderProjects_005CDynamicLinq_005CNotReferredClass_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=H_003A_005CRiderProjects_005CDynamicLinq_005CReferrerClass_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=H_003A_005CRiderProjects_005CIncremental_005FCompiler_005CNotReferred_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=H_003A_005CRiderProjects_005CIncremental_005FCompiler_005CNotToBeReferred_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=H_003A_005CRiderProjects_005CIncremental_005FCompiler_005CReferred_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=H_003A_005CRiderProjects_005CIncremental_005FCompiler_005CToBeReferred_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="H:\RiderProjects\DynamicLinq\ReferrerClass.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=17684ba6_002D8746_002D45e5_002Daac7_002Dc741e0e4aa51/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="FindDependency" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::8CF1826B-88EF-4E94-AF5A-8924D5C89E9C::net6.0::Incremental_Compiler.DependencyFinder.FindDependency&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5e927b52_002D0705_002D4002_002D85e7_002D7cc7779833f9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="FindDependency #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::8CF1826B-88EF-4E94-AF5A-8924D5C89E9C::net6.0::Incremental_Compiler.DependencyFinder.FindDependency&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bea68d8e_002Da75b_002D4f40_002D82c1_002D5de2f93de773/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ReadCsprojFile" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::8CF1826B-88EF-4E94-AF5A-8924D5C89E9C::net6.0::Incremental_Compiler.DependencyFinder&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::8CF1826B-88EF-4E94-AF5A-8924D5C89E9C::net6.0::Incremental_Compiler.Test.de&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::8CF1826B-88EF-4E94-AF5A-8924D5C89E9C::net6.0::Incremental_Compiler.Test.FindDependencies&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
