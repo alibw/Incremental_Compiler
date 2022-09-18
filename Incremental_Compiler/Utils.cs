@@ -6,8 +6,8 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions;
-using NotTobereferredProject;
 using TobereferredProject;
+
 
 namespace Incremental_Compiler;
 
@@ -39,26 +39,46 @@ public static class Utils
             MetadataReference.CreateFromFile((Path.Combine(path, "System.ComponentModel.Primitives.dll")))
         };
 
-    public static List<MetadataReference> AddDependencies(params Type[] dependencies)
+    public static List<MetadataReference> AddDependencies(List<DependentClass> dependencies)
     {
         List<MetadataReference> dependenciesReferences = new List<MetadataReference>(DefaultReferences);
-        for (int i = 0; i < dependencies.Length; i++)
+        for (int i = 0; i < dependencies.Count; i++)
         {
+            CompileClassToDll(dependencies[i]);
             string compiledDllsPath = "C:\\dlls";
             DirectoryInfo di = new DirectoryInfo(compiledDllsPath);
             var referencedDlls = Directory.GetFiles(compiledDllsPath, "*.dll");
-            dependenciesReferences.Add(
-                MetadataReference.CreateFromFile(Path.Combine(compiledDllsPath, dependencies[i].Name + ".dll")));
-            //compiledUsings = compiledUsings + $"using {file.Name.Trim('_').First()};";
+
+            if (File.Exists(Path.Combine(compiledDllsPath, dependencies[i].dependentClass.Name + ".dll")))
+            {
+                dependenciesReferences.Add(
+                    MetadataReference.CreateFromFile(Path.Combine(compiledDllsPath,
+                        dependencies[i].dependentClass.Name + ".dll")));
+                //compiledUsings = compiledUsings + $"using {file.Name.Trim('_').First()};";
+            }
+            else
+            {
+                if (!CompileClassToDll(dependencies[i]))
+                {
+                    throw new Exception($"Compilation Of {dependencies[i].dependentClass.Name} Failed!");
+                }
+                else
+                {
+                    dependenciesReferences.Add(
+                        MetadataReference.CreateFromFile(Path.Combine(compiledDllsPath,
+                            dependencies[i].dependentClass.Name + ".dll")));
+                }
+            }
         }
         return dependenciesReferences;
     }
 
-    public static void CompileClassToDll(Type classType, string projectName, params Type[]? dependencies)
+    public static bool CompileClassToDll(DependentClass classType)
     {
         DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory());
+        var projectName = classType.dependentClass.Namespace;
         var classPath = di.Parent.Parent.Parent.Parent.FullName;
-        var source = File.ReadAllText(Path.Combine(classPath, projectName, classType.Name + ".cs"));
+        var source = File.ReadAllText(Path.Combine(classPath, projectName, classType.dependentClass.Name + ".cs"));
         var parsedSyntaxTree = CSharpSyntaxTree.ParseText(usings + source);
 
         var options = new CSharpCompilationOptions
@@ -66,28 +86,39 @@ public static class Utils
             OutputKind.DynamicallyLinkedLibrary,
             optimizationLevel: OptimizationLevel.Release);
 
-        var fileName = classType.Name;
-        var compilation = CSharpCompilation.Create( fileName + ".dll",
+        var fileName = classType.dependentClass.Name;
+        var compilation = CSharpCompilation.Create(fileName + ".dll",
             new SyntaxTree[] { parsedSyntaxTree },
-            AddDependencies(dependencies), options);
+            AddDependencies(classType.dependencies), options);
 
         var result = compilation.Emit($"C:\\dlls\\{fileName}.dll");
         if (!result.Success)
         {
-            foreach (var item in result.Diagnostics)
+            foreach (var item in result.Diagnostics.Where(x => x.Severity == DiagnosticSeverity.Error).Distinct())
             {
                 Console.WriteLine("Diagnostic:" + item.GetMessage());
             }
+
+            File.Delete($"C:\\dlls\\{classType.dependentClass.Name}.dll");
+
+            return false;
         }
         else
         {
             Assembly compiledDll;
-            compiledDll = Assembly.LoadFrom($"C:\\dlls\\{classType.Name}.dll");
+            compiledDll = Assembly.LoadFrom($"C:\\dlls\\{classType.dependentClass.Name}.dll");
             foreach (var reference in compiledDll.GetReferencedAssemblies())
             {
-                Console.WriteLine($"Reference of {classType.Name} : {reference.Name}");
+                Console.WriteLine($"Reference of {classType.dependentClass.Name} : {reference.Name}");
             }
+
+            return true;
         }
+    }
+
+    public static Type CompileDependency(Type type, params Type[] dependencies)
+    {
+        return type;
     }
 
     public static void FindOutDependencies(string csProjPath)
@@ -98,11 +129,33 @@ public static class Utils
 
         foreach (string reference in references)
         {
-            Console.WriteLine(reference);
+            Console.WriteLine("Project Dependencies : " + reference);
         }
 
-        Utils.CompileClassToDll(typeof(NotToBeReferredClass), "TobereferredProject");
-        Utils.CompileClassToDll(typeof(TobereferredClass), "TobereferredProject");
-        Utils.CompileClassToDll(typeof(ReferredTest), "Incremental_Compiler",typeof(TobereferredClass),typeof(NotToBeReferredClass));
+        DependentClass t = new DependentClass()
+        {
+            dependentClass = typeof(ThirdClass),
+            dependencies = new List<DependentClass>()
+            {
+                new DependentClass()
+                {
+                    dependentClass = typeof(TobereferredClass),
+                    dependencies = new List<DependentClass>()
+                    {
+                        new DependentClass()
+                        {
+                            dependentClass = typeof(NotToBeReferredClass)
+                        }
+                    }
+                }
+            }
+        };
+        Utils.CompileClassToDll(t);
+        
+        
+        
+        //Utils.CompileClassToDll(typeof(NotToBeReferredClass));
+        //Utils.CompileClassToDll(typeof(TobereferredClass));
+        //Utils.CompileClassToDll(typeof(ReferredTest),typeof(TobereferredClass),typeof(NotToBeReferredClass));
     }
 }

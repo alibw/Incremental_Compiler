@@ -51,7 +51,6 @@ namespace Incremental_Compiler
             Utils.FindOutDependencies(
                 "H:\\RiderProjects\\Incremental_Compiler\\Incremental_Compiler\\Incremental_Compiler.csproj");
         }
-        
     }
 }
 

@@ -24,12 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="NotReferred">
-        <HintPath>..\NotReferred.dll</HintPath>
-      </Reference>
-      <Reference Include="Referred">
-        <HintPath>..\Referred.dll</HintPath>
-      </Reference>
+      <ProjectReference Include="..\TobereferredProject\TobereferredProject.csproj" />
     </ItemGroup>
 
 </Project>

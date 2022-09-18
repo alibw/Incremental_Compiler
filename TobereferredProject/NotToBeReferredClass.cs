@@ -1,4 +1,5 @@
-﻿namespace NotTobereferredProject
+﻿using TobereferredProject;
+namespace TobereferredProject
 {
 
     public class NotToBeReferredClass
